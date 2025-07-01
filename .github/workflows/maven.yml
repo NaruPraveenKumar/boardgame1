@@ -29,4 +29,14 @@ jobs:
       
        run: |
         trivy fs --format table -o fs.html .
+
+  sonar:
+      runs-on: self-hosted
+      needs: filesystemscan
+      steps:
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
     
